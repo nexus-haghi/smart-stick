@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="900" viewBox="0 0 1240 900" font-family="Arial, Helvetica, sans-serif">
+  <style>
+    .rail-pwr { stroke:#d32f2f; stroke-width:3; }
+    .rail-gnd { stroke:#424242; stroke-width:3; }
+    .pwr      { stroke:#c62828; stroke-width:2; fill:none; }
+    .gnd      { stroke:#616161; stroke-width:2; fill:none; }
+    .signal    { stroke:#1565c0; stroke-width:2; fill:none; }
+    .pwm      { stroke:#6a1b9a; stroke-width:2; fill:none; }
+    .npn      { stroke:#2e7d32; stroke-width:2; fill:#e8f5e9; }
+    .motor    { stroke:#e65100; stroke-width:2; fill:#fff3e0; }
+    .box      { stroke:#555; stroke-width:2; fill:#fafafa; }
+    .sensor   { stroke:#6a1b9a; stroke-width:2; fill:#f3e5f5; }
+    .label    { font-size:14px; fill:#333; }
+    .small    { font-size:11px; fill:#666; }
+    .big      { font-size:24px; font-weight:bold; fill:#1a1a1a; }
+  </style>
+
+  <!-- Title -->
+  <text x="40" y="38" class="big">Ultrasonic Smart Cane — Schematic</text>
+  <text x="40" y="56" class="small">3× HC-SR04 (FRONT / SIDE / TOP) • 3× vibration motors on the handle • intensity ∝ 1/distance</text>
+
+  <!-- Power rails -->
+  <line x1="60" y1="60" x2="1180" y2="60" class="rail-pwr"/>
+  <text x="92" y="52" font-size="14" font-weight="bold" fill="#d32f2f">+5 V rail</text>
+  <line x1="60" y1="860" x2="1180" y2="860" class="rail-gnd"/>
+  <text x="92" y="878" font-size="14" font-weight="bold" fill="#424242">GND rail (common ground)</text>
+
+  <!-- ============ Arduino UNO ============ -->
+  <rect x="40" y="120" width="300" height="680" class="box"/>
+  <text x="60" y="146" font-size="17" font-weight="bold" fill="#333">Arduino UNO</text>
+  <text x="60" y="164" class="small">ATmega328P</text>
+
+  <!-- Arduino pin list: label, y -->
+  <!-- 5V,180 | GND,220 | D2,280 | D3,320 | D4,360 | D5,400 | D6,440 | D7,480 | D9,540 | D10,580 | D11,620 -->
+  <circle cx="340" cy="180" r="4" fill="#c62828"/>
+  <text x="28" y="185" class="label" font-weight="bold" fill="#c62828">5V</text>
+  <circle cx="340" cy="220" r="4" fill="#424242"/>
+  <text x="28" y="225" class="label" font-weight="bold" fill="#424242">GND</text>
+  <circle cx="340" cy="280" r="4" fill="#333"/><text x="28" y="285" class="label">D2</text>
+  <circle cx="340" cy="320" r="4" fill="#333"/><text x="28" y="325" class="label">D3</text>
+  <circle cx="340" cy="360" r="4" fill="#333"/><text x="28" y="365" class="label">D4</text>
+  <circle cx="340" cy="400" r="4" fill="#333"/><text x="28" y="405" class="label">D5</text>
+  <circle cx="340" cy="440" r="4" fill="#333"/><text x="28" y="445" class="label">D6</text>
+  <circle cx="340" cy="480" r="4" fill="#333"/><text x="28" y="485" class="label">D7</text>
+  <circle cx="340" cy="540" r="4" fill="#6a1b9a"/><text x="28" y="545" class="label" fill="#6a1b9a">D9 ≈PWM</text>
+  <circle cx="340" cy="580" r="4" fill="#6a1b9a"/><text x="28" y="585" class="label" fill="#6a1b9a">D10 ≈PWM</text>
+  <circle cx="340" cy="620" r="4" fill="#6a1b9a"/><text x="28" y="625" class="label" fill="#6a1b9a">D11 ≈PWM</text>
+
+  <!-- Arduino power stubs -->
+  <path d="M340 180 V60" class="pwr"/>
+  <path d="M340 220 V860" class="gnd"/>
+
+  <!-- ============ Sensors ============ -->
+  <!-- FRONT row: box Y=150 ; TRIG->D2(280), ECHO->D3(320) -->
+  <rect x="850" y="150" width="280" height="110" class="sensor"/>
+  <text x="865" y="175" font-size="15" font-weight="bold" fill="#4a148c">U2 · FRONT (ahead)</text>
+  <circle cx="850" cy="178" r="4" fill="#c62828"/><text x="862" y="182" class="small" fill="#c62828">VCC</text>
+  <circle cx="850" cy="205" r="4" fill="#1565c0"/><text x="862" y="209" class="small" fill="#1565c0">TRIG</text>
+  <circle cx="850" cy="230" r="4" fill="#1565c0"/><text x="862" y="234" class="small" fill="#1565c0">ECHO</text>
+  <circle cx="850" cy="248" r="4" fill="#424242"/><text x="862" y="252" class="small" fill="#424242">GND</text>
+  <path d="M850 178 V60" class="pwr"/>
+  <path d="M850 248 V860" class="gnd"/>
+  <path d="M850 205 H700 V280 H340" class="signal"/>
+  <path d="M850 230 H700 V320 H340" class="signal"/>
+
+  <!-- SIDE (LEFT) row: box Y=380 ; TRIG->D4(360), ECHO->D5(400) -->
+  <rect x="850" y="380" width="280" height="110" class="sensor"/>
+  <text x="865" y="405" font-size="15" font-weight="bold" fill="#4a148c">U3 · SIDE (left)</text>
+  <circle cx="850" cy="408" r="4" fill="#c62828"/><text x="862" y="412" class="small" fill="#c62828">VCC</text>
+  <circle cx="850" cy="435" r="4" fill="#1565c0"/><text x="862" y="439" class="small" fill="#1565c0">TRIG</text>
+  <circle cx="850" cy="460" r="4" fill="#1565c0"/><text x="862" y="464" class="small" fill="#1565c0">ECHO</text>
+  <circle cx="850" cy="478" r="4" fill="#424242"/><text x="862" y="482" class="small" fill="#424242">GND</text>
+  <path d="M850 408 V60" class="pwr"/>
+  <path d="M850 478 V860" class="gnd"/>
+  <path d="M850 435 H700 V360 H340" class="signal"/>
+  <path d="M850 460 H700 V400 H340" class="signal"/>
+
+  <!-- TOP row: box Y=610 ; TRIG->D6(440), ECHO->D7(480) -->
+  <rect x="850" y="610" width="280" height="110" class="sensor"/>
+  <text x="865" y="635" font-size="15" font-weight="bold" fill="#4a148c">U4 · TOP (overhead)</text>
+  <circle cx="850" cy="638" r="4" fill="#c62828"/><text x="862" y="642" class="small" fill="#c62828">VCC</text>
+  <circle cx="850" cy="665" r="4" fill="#1565c0"/><text x="862" y="669" class="small" fill="#1565c0">TRIG</text>
+  <circle cx="850" cy="690" r="4" fill="#1565c0"/><text x="862" y="694" class="small" fill="#1565c0">ECHO</text>
+  <circle cx="850" cy="708" r="4" fill="#424242"/><text x="862" y="712" class="small" fill="#424242">GND</text>
+  <path d="M850 638 V60" class="pwr"/>
+  <path d="M850 708 V860" class="gnd"/>
+  <path d="M850 665 H700 V440 H340" class="signal"/>
+  <path d="M850 690 H700 V480 H340" class="signal"/>
+
+  <!-- ============ Motor drivers (transistor + motor + flyback diode) ============ -->
+
+  <!-- === FRONT driver (motor M1 on D9, row anchor 200) === -->
+  <path d="M340 540 H430 V225 H440" class="pwm"/>
+  <rect x="440" y="219" width="40" height="12" fill="none" stroke="#000" stroke-width="2"/>
+  <text x="444" y="215" class="small">R</text>
+  <path d="M480 225 H500" class="pwm"/>
+  <circle cx="590" cy="220" r="24" class="npn"/>
+  <text x="581" y="225" class="small" fill="#2e7d32">Q1</text>
+  <path d="M500 225 H566" class="npn"/>
+  <path d="M590 196 H620 V181" class="npn"/>
+  <path d="M590 244 H620 V255" class="npn"/>
+  <path d="M620 255 V860" class="gnd"/>
+  <circle cx="620" cy="155" r="26" class="motor"/>
+  <text x="615" y="160" class="label" font-weight="bold" fill="#e65100">M1</text>
+  <text x="606" y="128" class="small">vibration</text>
+  <path d="M620 129 V60" class="pwr"/>
+  <path d="M620 129 H662" class="pwr"/>
+  <path d="M662 155 L652 145 L672 145 Z" fill="#e65100" stroke="#e65100" stroke-width="1"/>
+  <line x1="671.5" y1="149" x2="671.5" y2="161" stroke="#e65100" stroke-width="2.5"/>
+  <path d="M662 181 H620" class="pwr"/>
+  <text x="676" y="153" class="small" fill="#e65100">D1</text>
+
+  <!-- === SIDE driver (motor M2 on D10, row anchor 430) === -->
+  <path d="M340 580 H430 V455 H440" class="pwm"/>
+  <rect x="440" y="449" width="40" height="12" fill="none" stroke="#000" stroke-width="2"/>
+  <text x="444" y="445" class="small">R</text>
+  <path d="M480 455 H500" class="pwm"/>
+  <circle cx="590" cy="450" r="24" class="npn"/>
+  <text x="581" y="455" class="small" fill="#2e7d32">Q2</text>
+  <path d="M500 455 H566" class="npn"/>
+  <path d="M590 426 H620 V411" class="npn"/>
+  <path d="M590 474 H620 V485" class="npn"/>
+  <path d="M620 485 V860" class="gnd"/>
+  <circle cx="620" cy="385" r="26" class="motor"/>
+  <text x="615" y="390" class="label" font-weight="bold" fill="#e65100">M2</text>
+  <text x="606" y="358" class="small">vibration</text>
+  <path d="M620 359 V60" class="pwr"/>
+  <path d="M620 359 H662" class="pwr"/>
+  <path d="M662 385 L652 375 L672 375 Z" fill="#e65100" stroke="#e65100" stroke-width="1"/>
+  <line x1="671.5" y1="379" x2="671.5" y2="391" stroke="#e65100" stroke-width="2.5"/>
+  <path d="M662 411 H620" class="pwr"/>
+  <text x="676" y="383" class="small" fill="#e65100">D2</text>
+
+  <!-- === TOP driver (motor M3 on D11, row anchor 660) === -->
+  <path d="M340 620 H430 V685 H440" class="pwm"/>
+  <rect x="440" y="679" width="40" height="12" fill="none" stroke="#000" stroke-width="2"/>
+  <text x="444" y="675" class="small">R</text>
+  <path d="M480 685 H500" class="pwm"/>
+  <circle cx="590" cy="680" r="24" class="npn"/>
+  <text x="581" y="685" class="small" fill="#2e7d32">Q3</text>
+  <path d="M500 685 H566" class="npn"/>
+  <path d="M590 656 H620 V641" class="npn"/>
+  <path d="M590 704 H620 V715" class="npn"/>
+  <path d="M620 715 V860" class="gnd"/>
+  <circle cx="620" cy="615" r="26" class="motor"/>
+  <text x="615" y="620" class="label" font-weight="bold" fill="#e65100">M3</text>
+  <text x="606" y="588" class="small">vibration</text>
+  <path d="M620 589 V60" class="pwr"/>
+  <path d="M620 589 H662" class="pwr"/>
+  <path d="M662 615 L652 605 L672 605 Z" fill="#e65100" stroke="#e65100" stroke-width="1"/>
+  <line x1="671.5" y1="609" x2="671.5" y2="621" stroke="#e65100" stroke-width="2.5"/>
+  <path d="M662 641 H620" class="pwr"/>
+  <text x="676" y="613" class="small" fill="#e65100">D3</text>
+
+  <!-- ============ Notes ============ -->
+  <rect x="40" y="790" width="600" height="56" rx="6" fill="#f5f5f5" stroke="#bbb"/>
+  <text x="56" y="812" class="small" font-weight="bold">Notes</text>
+  <text x="56" y="828" class="small">• Crossings are NOT junctions — only the filled dots are connections. • Motors are driven through NPN transistors (2N2222 / BC547)</text>
+  <text x="56" y="842" class="small">  with a flyback diode — never directly from the Arduino pin. • All VCC/GND share one +5 V / common-ground rail (power the 3 motors from a</text>
+  <text x="56" y="856" class="small">  separate 5 V supply ≥ 1 A, or a rechargeable USB power bank/18650 — see WIRING.md).</text>
+</svg>
